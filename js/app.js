@@ -1,12 +1,39 @@
 var app = angular.module('ng-swapi', []);
 
-app.controller('planets', ['$scope', function($scope) {
+app.controller('planets', ['$scope', '$sce', function($scope, $sce) {
+
+  var progressSymbol = '&#xf188;';
 
   $scope.minResidents = 3;
+  $scope.progress = undefined;
+  $scope.error = false;
+  $scope.loading = false;
 
   $scope.planetsRequested = function() {
+    $scope.progress = $sce.trustAsHtml(progressSymbol);
+    $scope.loading = true;
+    $scope.error = false;
     $scope.$broadcast('planetsRequested');
   }
+
+  $scope.$on('httpsError', function($event, message) {
+    $event.preventDefault();
+    $scope.error = true;
+    $scope.progress = message;
+    $scope.loading = false;
+  });
+
+  $scope.$on('httpsProgress', function($event, percent) {
+    $event.preventDefault();
+    if (percent > 100) {
+      $scope.progress = undefined;
+      $scope.loading = false;
+    }
+    else {
+      $scope.progress = $sce.trustAsHtml(
+       Array(Math.ceil(percent)).join(progressSymbol));
+    }
+  });
 
 }]);
 
@@ -25,19 +52,22 @@ app.directive('swapiPlanetsSelector', function() {
 
   function controller($scope, $http) {
 
-//    $scope.planets = [{name: '---Use request---'}];
-   $scope.planets = [{id: 23, name: 'Planet 23'}, {id: 2, name: 'Planet 2'}];
+    $scope.planets = [];
     var planets = [];
+    var progressCount = 0;
 
     $scope.$on('planetsRequested', function($event) {
       $event.preventDefault();
-
-      $scope.planets = [{name: '---Loading planets---'}];
+      $scope.planets = [];
+      progressCount = 0;
+      planets = [{name: '---Select planet---'}];
       getPlanets('http://swapi.co/api/planets/?format=json');
     });
 
     function getPlanets(url) {
       $http.get(url).then(function(res) {
+        progressCount += 10 * 100;
+        $scope.$emit('httpsProgress', progressCount / res.data.count);
         res.data.results.forEach(function(planet) {
           if (planet.residents.length >= $scope.minResidents) {
             planets.push({id: planet.url.match(/\/(\d+)\/$/)[1], name: planet.name});
@@ -51,7 +81,7 @@ app.directive('swapiPlanetsSelector', function() {
         }
       },
       function(err){
-        console.error(err);
+        $scope.$emit('httpsError', 'Failed to download planets data. Error number: ' + err.status);
       });
     }
 
@@ -85,7 +115,7 @@ app.directive('swapiPlanet', function() {
           $scope.ngModel = $scope.planet;
         },
         function(err){
-          console.error(err);
+          $scope.$emit('httpsError', 'Failed to download planet data. Error number: ' + err.status);
         });
       }
     });
@@ -103,7 +133,7 @@ app.directive('swapiResident', function() {
   };
 
   function controller($scope, $http) {
-    $scope.resident;
+    $scope.resident = {name: 'Loading data...'};
 
     $scope.$watch('id', function(id) {
       if (id) {
@@ -111,7 +141,7 @@ app.directive('swapiResident', function() {
           $scope.resident = res.data;
         },
         function(err){
-          console.error(err);
+          $scope.$emit('httpsError', 'Failed to download resident data. Error number: ' + err.status);
         });
       }
     });

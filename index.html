@@ -13,18 +13,22 @@
   <body>
     <div class="container-fluid" ng-controller="planets">
       <div class="col-sm-12 text-center">
-        <h1>Please Choose a Planet</h1>
-        <form class="form-inline" ng-submit="planetsRequested()">
+        <form class="form-inline planet-selector" ng-submit="planetsRequested()">
           <div class="form-group">
             <label class="number">Number of residents:
               <input class="form-control" type="number" min="0" max="30" ng-model="minResidents">
             </label>
           </div>
-          <button type="submit" class="btn btn-primary">Request</button>
+          <button type="submit" class="btn btn-primary">
+          <span data-ng-hide="loading">Request</span>
+          <span data-ng-show="loading">Loading
+            <i class="fa fa-spinner fa-spin"></i>
+          </span>
+          </button>
         </form>
-        <i class="fa"></i>
         <swapi-planets-selector min-residents="{{minResidents}}" ng-model="planetId"></swapi-planets-selector>
         <hr class="soften">
+        <div ng-class="{'error': error, 'progress': !error}" ng-show="progress" ng-bind-html="progress"></div>
         <swapi-planet id="{{planetId}}" ng-model="planet">
           <hr class="soften">
           <swapi-resident id="{{resident}}" ng-repeat="resident in planet.residents"></swapi-resident>

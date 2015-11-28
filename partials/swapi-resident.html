@@ -1,9 +1,9 @@
 <div class="panel panel-primary panel-resident">
   <div class="panel-heading">{{resident.name}}
-            <i class="fa" ng-class="{'fa-mars': resident.gender === 'male', 'fa-venus': resident.gender === 'female'}"></i>
+    <i class="fa" ng-class="{'fa-mars': resident.gender === 'male', 'fa-venus': resident.gender === 'female'}"></i>
   </div>
   <div class="panel-body">
-    <table class="table table-hover resident-description">
+    <table class="table resident-description">
       <tbody>
         <tr>
           <td class="field">Year of Birth</td>
@@ -11,7 +11,7 @@
         </tr>
         <tr>
           <td class="field">Height</td>
-          <td class="value">{{resident.height}}</td>
+          <td class="value">{{resident.height}} cm</td>
         </tr>
         <tr>
           <td class="field">Mass</td>
@@ -37,3 +37,4 @@
     <div><span class="field">Date Edited:</span> {{resident.edited | date:"MM/dd/yyyy @ h:mma"}}</div>
   </div>
 </div>
+
