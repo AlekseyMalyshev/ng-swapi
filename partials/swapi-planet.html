@@ -1,0 +1,56 @@
+<div class="planet-description" ng-show="planet">
+  <h1>Planet Description</h1>
+  <table class="table table-hover planet-description">
+    <tbody>
+      <tr>
+        <td class="field">Planet Name</td>
+        <td class="value">{{planet.name}}</td>
+      </tr>
+      <tr>
+        <td class="field">Number of Residents</td>
+        <td class="value">{{planet.residents.length}}</td>
+      </tr>
+      <tr>
+        <td class="field">Population</td>
+        <td class="value">{{planet.population}}</td>
+      </tr>
+      <tr>
+        <td class="field">Terrain</td>
+        <td class="value">{{planet.terrain}}</td>
+      </tr>
+      <tr>
+        <td class="field">Surface Water</td>
+        <td class="value">{{planet.surface_water}}</td>
+      </tr>
+      <tr>
+        <td class="field">Climate</td>
+        <td class="value">{{planet.climate}}</td>
+      </tr>
+      <tr>
+        <td class="field">Gravity</td>
+        <td class="value">{{planet.gravity}}</td>
+      </tr>
+      <tr>
+        <td class="field">Diameter</td>
+        <td class="value">{{planet.diameter}}</td>
+      </tr>
+      <tr>
+        <td class="field">Rotation Period</td>
+        <td class="value">{{planet.rotation_period}}</td>
+      </tr>
+      <tr>
+        <td class="field">Orbital Period</td>
+        <td class="value">{{planet.orbital_period}}</td>
+      </tr>
+      <tr>
+        <td class="field">Date Created</td>
+        <td class="value">{{planet.created | date:"MM/dd/yyyy @ h:mma"}}</td>
+      </tr>
+      <tr>
+        <td class="field">Date Edited</td>
+        <td class="value">{{planet.edited | date:"MM/dd/yyyy @ h:mma"}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div ng-transclude></div>
+</div>

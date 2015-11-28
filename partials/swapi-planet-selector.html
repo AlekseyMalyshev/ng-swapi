@@ -1,0 +1,3 @@
+<select class="form-control planets" ng-model="planet" ng-change="planetSelected()">
+  <option ng-repeat="planet in planets track by $index" value="{{planet.id}}" ng-attr-selected="$index === 0">{{planet.name}}</option>
+</select>

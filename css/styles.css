@@ -1,0 +1,52 @@
+input.number {
+  width: 50px;
+}
+
+label.number {
+  margin: 2px;
+}
+
+input,
+button {
+  outline: none;
+}
+
+select.planets {
+  width: 180px;
+  display: inline-block;
+  margin-top: 15px;
+}
+
+div.planet-description {
+  text-align: center;
+}
+
+table.planet-description {
+  text-align: left;
+  width: 100%;
+}
+
+td.field,
+span.field {
+  font-weight: bold;
+  width: 30%;
+  min-width: 180px;
+}
+
+td.value {
+  font-style: italic;
+}
+
+div.panel-resident {
+  width: auto;
+  min-width: 250px;
+  max-width: 330px;
+  display: inline-block;
+  padding: 0;
+  margin: 10px;
+}
+
+table.resident-description {
+  text-align: left;
+  margin-bottom: 0;
+}

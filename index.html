@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="ng-swapi">
+
+  <head>
+    <meta charset="utf-8" />
+    <title>Star Wars API with Angular</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container-fluid" ng-controller="planets">
+      <div class="col-sm-12 text-center">
+        <h1>Please Choose a Planet</h1>
+        <form class="form-inline" ng-submit="planetsRequested()">
+          <div class="form-group">
+            <label class="number">Number of residents:
+              <input class="form-control" type="number" min="0" max="30" ng-model="minResidents">
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">Request</button>
+        </form>
+        <i class="fa"></i>
+        <swapi-planets-selector min-residents="{{minResidents}}" ng-model="planetId"></swapi-planets-selector>
+        <hr class="soften">
+        <swapi-planet id="{{planetId}}" ng-model="planet">
+          <hr class="soften">
+          <swapi-resident id="{{resident}}" ng-repeat="resident in planet.residents"></swapi-resident>
+        </swapi-planet>
+      </div>
+    </div>
+    <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+  </body>
+
+</html>
+
